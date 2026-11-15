@@ -274,6 +274,7 @@ export const DEFAULT_LINKS: LinkItem[] = [
 | **Frontend Framework** | **Next.js 15 (App Router), TypeScript** | SEO 친화적, 빠른 초기 로딩, 모던 웹 표준 |
 | **Styling & UI Architecture** | **Tailwind CSS v3 (100% 통합, CSS Modules 배제)** | CSS 모듈 파편화를 제거하고 shadcn/ui 디자인 토큰과 유틸리티 클래스로 완전 일원화 |
 | **Design System & Components** | **shadcn/ui (TDS Tokenized Reusable Components)** | WAI-ARIA 웹 접근성, `design.md`의 토스 디자인 토큰 완벽 융합 및 모듈형 재사용 |
+| **Form & Validation** | **React Hook Form (RHF) + Zod (@hookform/resolvers)** | 타입 안전 스키마 검증, 비제어 컴포넌트 기반 리렌더링 최적화 및 TDS 에러 핸들링 |
 | **Client Storage** | **Browser localStorage (Step 1)** | 외부 백엔드 의존성 없이 시연 가능한 빠른 영속화 계층 |
 | **Global State** | **Zustand (또는 React Hook)** | 가볍고(약 1KB) 보일러플레이트 제로, 상태 동기화에 최적 |
 
