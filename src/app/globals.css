@@ -1,43 +1,108 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
-:root {
-  /* TDS Brand Colors */
-  --blue-500: #3182f6;
-  --blue-600: #1b64da;
-  --blue-50: #e8f3ff;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  /* TDS Greyscale */
-  --grey-900: #191f28;
+:root {
+  /* ==========================================================================
+     Toss Design System (TDS) Canonical Tokens (design.md 출처)
+     ========================================================================== */
+  --blue-500: #3182f6;       /* 카노니컬 Toss Blue (화면당 하나의 강조 CTA) */
+  --blue-600: #1b64da;       /* Pressed State */
+  --blue-700: #134cb2;
+  --blue-50: #e8f3ff;        /* Brand-weak background / 뱃지 배경 */
+
+  /* TDS Greyscale (Cool-blue tinted neutrals) */
+  --grey-900: #191f28;       /* Primary Text (절대 순수 검정 안 씀) */
   --grey-800: #333d4b;
-  --grey-700: #4e5968;
+  --grey-700: #4e5968;       /* Secondary Text */
   --grey-600: #6b7684;
   --grey-500: #8b95a1;
-  --grey-400: #b0b8c1;
+  --grey-400: #b0b8c1;       /* Disabled Text */
   --grey-300: #d1d6db;
-  --grey-200: #e5e8eb;
-  --grey-100: #f2f4f6;
+  --grey-200: #e5e8eb;       /* Default Divider / Border */
+  --grey-100: #f2f4f6;       /* Secondary Surface / Body Canvas */
   --grey-50: #f9fafb;
   --white: #ffffff;
 
   /* Semantic */
-  --green-500: #04b068;
-  --red-500: #f04452;
+  --green-500: #04b068;      /* Success */
+  --red-500: #f04452;        /* Error / Danger */
 
-  /* TDS Elevation */
+  /* TDS Elevation (design.md) */
   --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --shadow-dialog: 0 12px 32px rgba(25, 31, 40, 0.10), 0 2px 6px rgba(25, 31, 40, 0.06);
   --shadow-toast: 0 8px 24px rgba(25, 31, 40, 0.16);
+  --shadow-button: 0 4px 12px rgba(49, 130, 246, 0.25);
 
-  /* TDS Radii */
+  /* TDS Radii (design.md) */
+  --radius-xs: 4px;
   --radius-s: 8px;
   --radius-m: 12px;
   --radius-l: 14px;
-  --radius-xl: 16px;
-  --radius-2xl: 20px;
-  --radius-3xl: 24px;
-  --radius-full: 999px;
+  --radius-xl: 16px;         /* L/XL 버튼, 일반 카드 */
+  --radius-2xl: 20px;        /* 시트, 다이얼로그 */
+  --radius-3xl: 24px;        /* 메인 프로필 카드 */
+  --radius-4xl: 32px;
+  --radius-full: 999px;      /* 칩, 캡슐 뱃지 */
 
-  /* Fonts */
+  /* Typography */
   --font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+
+  /* ==========================================================================
+     shadcn/ui Semantic Variables Mapped to TDS
+     ========================================================================== */
+  --background: var(--grey-100);
+  --foreground: var(--grey-900);
+
+  --card: var(--white);
+  --card-foreground: var(--grey-900);
+
+  --popover: var(--white);
+  --popover-foreground: var(--grey-900);
+
+  --primary: var(--blue-500);
+  --primary-foreground: var(--white);
+
+  --secondary: var(--blue-50);
+  --secondary-foreground: var(--blue-500);
+
+  --muted: var(--grey-100);
+  --muted-foreground: var(--grey-600);
+
+  --accent: var(--grey-100);
+  --accent-foreground: var(--grey-900);
+
+  --destructive: var(--red-500);
+  --destructive-foreground: var(--white);
+
+  --border: var(--grey-200);
+  --input: var(--grey-200);
+  --ring: var(--blue-500);
+  --radius: 1rem;            /* 16px (TDS 버튼/카드 표준 라운드) */
+}
+
+.dark {
+  --background: #14171d;
+  --foreground: #ffffff;
+  --card: #1f232c;
+  --card-foreground: #ffffff;
+  --popover: #1f232c;
+  --popover-foreground: #ffffff;
+  --primary: #3182f6;
+  --primary-foreground: #ffffff;
+  --secondary: #242933;
+  --secondary-foreground: #3182f6;
+  --muted: #242933;
+  --muted-foreground: #8b95a1;
+  --accent: #242933;
+  --accent-foreground: #ffffff;
+  --destructive: #f04452;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #3182f6;
 }
 
 * {
@@ -52,8 +117,8 @@ body {
   max-width: 100vw;
   min-height: 100vh;
   overflow-x: hidden;
-  background-color: var(--grey-100);
-  color: var(--grey-900);
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: var(--font-family);
   letter-spacing: -0.015em;
   -webkit-font-smoothing: antialiased;
@@ -70,4 +135,13 @@ button {
   border: none;
   background: none;
   cursor: pointer;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
