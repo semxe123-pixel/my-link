@@ -291,7 +291,7 @@ export const DEFAULT_LINKS: LinkItem[] = [
 - [x] **CSS Modules(`.module.css`) 배제 및 Tailwind CSS 유틸리티 100% 통일**
 - [x] **shadcn/ui 기반 재사용 컴포넌트 아키텍처 구축 (`Card`, `Badge`, `Button`, `LinkItemRow`, `ProfileCard`, `ToastSimple`)**
 - [x] **더미 데이터 기반 링크 목록 뷰어 페이지 구현 (`/` 및 `/links`)**
-- [ ] `localStorage` 읽기/쓰기 커스텀 훅 및 상태 연동
-- [ ] shadcn/ui 기반 시연용 프로필/링크 간이 편집 Dialog(모달) 구현
-- [ ] 신규 링크 추가 / 삭제 기능 연동
-- [ ] 데모 데이터 복원(초기화) 버튼 연동
+- [x] **`localStorage` 읽기/쓰기 커스텀 훅 및 로컬 상태 연동 (`useProfile`)**
+- [x] **shadcn/ui 기반 시연용 링크 추가/편집 Dialog(모달) 구현 (`AddLinkDialog`)**
+- [x] **신규 링크 추가 / 삭제 기능 연동 (아이콘 선택, 유효성 검사, 토스트 피드백)**
+- [x] **데모 데이터 복원(초기화) 버튼 연동**

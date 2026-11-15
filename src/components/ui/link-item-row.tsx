@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 export interface LinkItemRowProps {
   link: LinkItem;
   onCopyAction?: (link: LinkItem) => void;
+  onDelete?: (id: string) => void;
   className?: string;
 }
 
@@ -14,7 +15,7 @@ export const renderLinkIcon = (icon: LinkItem["icon"]) => {
   const commonProps = {
     width: 22,
     height: 22,
-    viewBox: "0 0 24 24",
+    viewBox: "0 0 24 24" as const,
     fill: "none",
     stroke: "currentColor",
     strokeWidth: 2,
@@ -74,66 +75,112 @@ export const renderLinkIcon = (icon: LinkItem["icon"]) => {
   }
 };
 
-export function LinkItemRow({ link, onCopyAction, className }: LinkItemRowProps) {
+export function LinkItemRow({
+  link,
+  onCopyAction,
+  onDelete,
+  className,
+}: LinkItemRowProps) {
   const content = (
-    <>
-      <div className="flex items-center gap-3.5 min-w-0">
-        <div className="flex w-11 h-11 shrink-0 items-center justify-center rounded-[14px] bg-muted text-foreground transition-colors group-hover:bg-toss-grey-200">
-          {renderLinkIcon(link.icon)}
-        </div>
-        <div className="flex flex-col text-left min-w-0">
-          <span className="text-[15px] font-bold tracking-tight text-foreground truncate">
-            {link.title}
-          </span>
-          <span className="text-xs font-normal text-muted-foreground truncate">
-            {link.subtitle}
-          </span>
-        </div>
+    <div className="flex items-center gap-3.5 min-w-0 flex-1">
+      <div className="flex w-11 h-11 shrink-0 items-center justify-center rounded-[14px] bg-muted text-foreground transition-colors group-hover:bg-toss-grey-200">
+        {renderLinkIcon(link.icon)}
       </div>
-      <div className="flex items-center text-toss-grey-400 group-hover:text-foreground group-hover:translate-x-0.5 transition-all shrink-0 ml-3">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-5 h-5"
-        >
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
+      <div className="flex flex-col text-left min-w-0">
+        <span className="text-[15px] font-bold tracking-tight text-foreground truncate">
+          {link.title}
+        </span>
+        <span className="text-xs font-normal text-muted-foreground truncate">
+          {link.subtitle}
+        </span>
       </div>
-    </>
+    </div>
   );
 
   const baseClasses = cn(
-    "group flex w-full items-center justify-between px-5 py-3.5 transition-all duration-120",
+    "group relative flex w-full items-center justify-between px-5 py-3.5 transition-all duration-120",
     "hover:bg-toss-grey-50 active:scale-[0.985] active:bg-muted select-none",
     className
   );
 
-  if (link.isCopyAction) {
-    return (
-      <button
-        type="button"
-        onClick={() => onCopyAction?.(link)}
-        className={cn(baseClasses, "cursor-pointer border-none bg-transparent")}
-      >
-        {content}
-      </button>
-    );
-  }
-
   return (
-    <a
-      href={link.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={baseClasses}
-    >
-      {content}
-    </a>
+    <div className="relative flex items-center w-full group/row">
+      {link.isCopyAction ? (
+        <button
+          type="button"
+          onClick={() => onCopyAction?.(link)}
+          className={cn(baseClasses, "cursor-pointer border-none bg-transparent")}
+        >
+          {content}
+          <div className="flex items-center text-toss-grey-400 group-hover:text-foreground group-hover:translate-x-0.5 transition-all shrink-0 ml-3">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-5 h-5"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+        </button>
+      ) : (
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={baseClasses}
+        >
+          {content}
+          <div className="flex items-center text-toss-grey-400 group-hover:text-foreground group-hover:translate-x-0.5 transition-all shrink-0 ml-3">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-5 h-5"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+        </a>
+      )}
+
+      {/* 선택적 삭제 버튼 (호버 또는 클릭 시 노출) */}
+      {onDelete && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onDelete(link.id);
+          }}
+          title="링크 삭제"
+          className="absolute right-12 z-10 hidden group-hover/row:flex items-center justify-center size-7 rounded-lg bg-red-50 text-destructive hover:bg-destructive hover:text-white transition-all shadow-sm"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      )}
+    </div>
   );
 }
